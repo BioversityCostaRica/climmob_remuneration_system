@@ -1,0 +1,19 @@
+{% extend_me %}
+
+{% block progress_enumerators %}
+    {% if activeProject.use_remuneration_system == "on" %}
+        <div class="col-md-9">
+            <a class="btn btn-primary btn-rounded btn-block" style="text-align: left;width: 100%; overflow: hidden;text-overflow: ellipsis;" {% if progress.enumerators_by_user == 0 %} onclick="seeHelp()" {% else %} href="{{ request.route_url('prjenumerators',user=activeProject["owner"].user_name, project=activeProject["project_cod"]) }}" {% endif %}><i class="fa fa-user-circle-o"></i> {{ _("2. Assign field agents and coordinators") }} {% if progress.numberOfFieldAgents > 0 %} <span class="label b-r-xl label-default" style="background-color: white; color: black; float: right!important; margin-top: 2px" title="{{ progress.numberOfFieldAgents }} {{ _("field agents assigned") }}">{{ progress.numberOfFieldAgents }} {{ _("Assigned") }}</span> {% endif %} {% if project_has_coordinator %} &nbsp;<span class="label b-r-xl label-default" style="background-color: white; color: black; float: right!important; margin-top: 2px" >{{ _("With a coordinator") }}</span>{% else %}&nbsp;<span class="label b-r-xl label-danger" style="background-color: white; color: red; float: right!important; margin-top: 2px" >{{ _("Without a coordinator") }}</span>{% endif %}</a>
+        </div>
+        <div class="col-md-3">
+            <p style="margin-top: 8px; text-align: center"><span class="label {% if progress.enumerators and project_has_coordinator %}label-success{% else %}label-danger{% endif %}">{% if progress.enumerators and project_has_coordinator %}{{ _("Completed") }}{% else %}{{ _("Pending") }}{% endif %}</span></p>
+        </div>
+    {% else %}
+        <div class="col-md-9">
+            <a class="btn btn-primary btn-rounded btn-block" style="text-align: left;width: 100%; overflow: hidden;text-overflow: ellipsis;" {% if progress.enumerators_by_user == 0 %} onclick="seeHelp()" {% else %} href="{{ request.route_url('prjenumerators',user=activeProject["owner"].user_name, project=activeProject["project_cod"]) }}" {% endif %}><i class="fa fa-user-circle-o"></i> {{ _("2. Assign field agents") }} {% if progress.numberOfFieldAgents > 0 %} <span class="label b-r-xl label-default" style="background-color: white; color: black; float: right!important; margin-top: 2px" title="{{ progress.numberOfFieldAgents }} {{ _("field agents assigned") }}">{{ progress.numberOfFieldAgents }} {{ _("Assigned") }}</span> {% endif %} </a>
+        </div>
+        <div class="col-md-3">
+            <p style="margin-top: 8px; text-align: center"><span class="label {% if progress.enumerators %}label-success{% else %}label-danger{% endif %}">{% if progress.enumerators %}{{ _("Completed") }}{% else %}{{ _("Pending") }}{% endif %}</span></p>
+        </div>
+    {% endif %}
+{% endblock %}

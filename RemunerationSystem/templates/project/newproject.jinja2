@@ -1,0 +1,11 @@
+{% extend_me %}
+
+{% block js_script_extra %}
+    $(document).ready(function () {
+        var valueOfRemunerationSystem = "{{ dataworking["use_remuneration_system"] }}";
+        if (valueOfRemunerationSystem === "1")
+            $("#use_remuneration_system").bootstrapSwitch('state', true);
+        else
+            $("#use_remuneration_system").bootstrapSwitch('state', false);
+    });
+{% endblock js_script_extra %}

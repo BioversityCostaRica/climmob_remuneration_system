@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block meta %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ request.url_for_static('landing/icon.png') }}">
+    {% endblock meta %}
+
+    {% block title %}
+        <title>{{ _("ClimMob - Coordinators") }}</title>
+    {% endblock title %}
+
+    {% block css %}
+        {% cssresource request,'coreresources','c3' %}
+        {% cssresource request,'coreresources','style' %}
+        {% cssresource request,'coreresources','sweet' %}
+        {% cssresource request,'coreresources','tour' %}
+        {% cssresource request,'coreresources','toastr' %}
+
+    {% endblock css %}
+
+    {% block topScripts %}
+
+        {% jsresource request,'coreresources','dashboard' %}
+        {% jsresource request,'coreresources','sweet' %}
+        {% jsresource request,'coreresources','toastr' %}
+
+        {% jsresource request,'coreresources','d3' %}
+        {% jsresource request,'coreresources','c3' %}
+        {% jsresource request,'coreresources','tour' %}
+
+    {% endblock topScripts %}
+
+</head>
+
+{% set withsidebar = [] %}
+
+<body class="{% block bodyclass %}{% endblock bodyclass %}" {% block bodyattributes %}{% endblock bodyattributes %}>
+{% block body %}
+    <div id="wrapper">
+        {% block mainavbar %}
+            <nav class="navbar-default navbar-static-side" role="navigation" style="z-index: initial">
+                <div class="sidebar-collapse">
+                    <ul class="nav metismenu" id="side-menu">
+                        {% block mainavheader %}
+                            <li class="nav-header">
+                                <div class="dropdown profile-element">
+                                    <span>
+                                        {% block mnavuserimage %}
+                                            <img alt="image" class="img-circle" src="{{ request.route_url("coordinator_gravatar",_query={"name": coordinator_details.enum_name}) }}" />
+                                        {% endblock mnavuserimage %}
+                                    </span>
+                                    {% block mnavuserdm %}
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        <span class="clear">
+                                            {% block mnavuserdetails %}
+                                                <span class="block m-t-xs"> <strong class="font-bold">{{ coordinator_details.enum_name }}</strong></span>
+                                                <span class="text-muted text-xs block">{{ _("Actions") }} <b class="caret"></b></span>
+                                            {% endblock mnavuserdetails %}
+                                        </span>
+                                        </a>
+                                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                            {% block mnavusermitems %}
+                                                <li><a href="{{ request.route_url('coordinator_logout',user=user_id,project=project_cod) }}">{{ _("Logout") }}</a></li>
+                                            {% endblock mnavusermitems %}
+                                        </ul>
+                                    {% endblock mnavuserdm %}
+                                </div>
+                                <div class="logo-element">
+                                    {% block mainavlogo %}
+                                        CM
+                                    {% endblock mainavlogo %}
+                                </div>
+                            </li>
+                        {% endblock mainavheader %}
+                        {% block mainavitems %}
+                            <li {% if not sectionActive %}class="active" {% endif %}>
+                                <a href="{{ request.route_url('coordinator_dashboard',user=user_id,project=project_cod) }}"><i class="fa fa-th-large"></i> <span class="nav-label">{{ _("Coordinator Dashboard") }}</span></a>
+                            </li>
+                        {% endblock mainavitems %}
+                    </ul>
+                </div>
+            </nav>
+        {% endblock mainavbar %}
+        <div id="page-wrapper" class="gray-bg">
+            {% block header %}
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header" style="min-width: 50%">
+                            {% block headwelcome %}
+                                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
+                                <h2 style="margin: 14px 5px 5px 20px"> <span style="color: #1ab492">ClimMob - </span><span style="color: red">{{ _('Coordinator access') }}</span></h2>
+                            {% endblock headwelcome %}
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            {% block headitems %}
+                                <li class="li_languages">
+                                    <img class="language" name="en" src="{{ request.url_for_static('landing/en.png') }}" style="height: 15px; width: 22px">
+                                </li>
+                                <li class="li_languages">
+                                    <img class="language" name="es" src="{{ request.url_for_static('landing/es.png') }}" style="height: 15px; width: 22px">
+                                </li>
+                                <li class="li_languages">
+                                    <img class="language" name="fr" src="{{ request.url_for_static('landing/fr.png') }}" style="height: 15px; width: 22px">
+                                </li>
+                                <li>
+                                    <a href="{{ request.route_url('coordinator_logout',user=user_id,project=project_code) }}">
+                                        <i class="fa fa-sign-out"></i> {{ _("Log out") }}
+                                    </a>
+                                </li>
+                            {% endblock headitems %}
+                        </ul>
+                    </nav>
+                </div>
+            {% endblock header %}
+            {% block pageheading %}
+
+                <div class="row" style="background-color: white">
+                    <div class="col-lg-12">
+                        <div class="ibox-content" style="padding: 5px 20px 10px 20px;">
+
+                        </div>
+                    </div>
+                </div>
+            {% endblock pageheading %}
+            <div class="wrapper wrapper-content">
+                {% block pagecontent %}
+
+                {% endblock pagecontent %}
+            </div>
+            <div class="footer">
+                {% block footer %}
+                    <div class="pull-right">
+                        {{ request.h.get_version() }}
+                    </div>
+                    <div>
+                        <strong>{{ _("Copyright") }}</strong> {{ _("2022, Alliance of Bioversity International and CIAT") }}
+                    </div>
+                {% endblock footer %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+</body>
+</html>

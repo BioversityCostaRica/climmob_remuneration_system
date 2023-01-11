@@ -1,0 +1,11 @@
+{% extend_me %}
+
+{% block type_project_extra %}
+    <hr>
+    <div class="form-group" style="margin: 5px">
+        <label class="col-sm-4 control-label">{{ _("Will you remunerate the field agents for their work?") }}</label>
+        <div class="col-sm-8">
+            <input type="checkbox" id="use_remuneration_system" name="use_remuneration_system" data-on-color="success" data-off-color="danger" data-on-text="{{ _('Yes') }}" data-off-text="{{ _('No') }}" >
+        </div>
+    </div>
+{% endblock type_project_extra %}

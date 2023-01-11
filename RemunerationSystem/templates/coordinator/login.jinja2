@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block loginmeta %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ request.url_for_static('landing/icon.png') }}">
+    {% endblock loginmeta %}
+    {% block logintitle %}
+        <title>{{ _("ClimMob | Coordinator login") }}</title>
+    {% endblock logintitle %}
+
+    {% block css %}
+        {% cssresource request,'coreresources','style' %}
+    {% endblock css %}
+
+    {% block topScripts %}
+        {% jsresource request,'coreresources','landing' %}
+    {% endblock topScripts %}
+</head>
+
+<body class="gray-bg">
+{% block loginbody %}
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+                {% block loginlogo %}
+                    <img src="{{ request.url_for_static('climmob_coordinators.png',"RemunerationSystem") }}" alt="logo" width="300px"/>
+                    <br><br>
+                {% endblock loginlogo %}
+
+            </div>
+
+            {% block logincontent %}
+                <p>{{ _("Coordinator login in") }}</p>
+                {% block loginerror %}
+                    {% if failed_attempt %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            {{ _("Login failed. Please check your credentials and try again") }}
+                        </div>
+                    {% endif %}
+                {% endblock loginerror %}
+                <form class="m-t" role="form" method="post" action="{{ request.path }}">
+                    {% block loginform %}
+                        <div class="form-group">
+                            <input type="text" name="login" class="form-control" placeholder="{{ _("Username") }}" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="passwd" class="form-control" placeholder="{{ _("Password") }}" required="">
+                        </div>
+                        <input type="hidden" name="next_page" value="{{ next_page }}">
+                        <button type="submit" name="submit" class="btn btn-primary block full-width m-b">{{ _("Login") }}</button>
+
+                    {% endblock loginform %}
+                </form>
+            {% endblock logincontent %}
+            {% block loginfooter %}
+                <br>
+                <strong>{{ _("Copyright") }}</strong> {{ _("2022, Alliance of Bioversity International and CIAT") }}
+            {% endblock loginfooter %}
+        </div>
+    </div>
+
+{% endblock loginbody %}
+</body>
+
+</html>
